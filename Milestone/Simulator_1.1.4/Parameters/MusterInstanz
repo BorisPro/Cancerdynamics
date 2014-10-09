@@ -1,0 +1,33 @@
+N1 = # T-Zellentypen
+N2 = # Genotypen
+N3 = # Phenotypen der N2er. Danach ließt das Programm N = 1 + N1 + N2 * N3 Populationsgrößen ein.
+TNFalpha 	= Menge des Botenstoffs "Tumornecrosefaktor".
+T1 ... TN1	// Vektor: T-Zell typen
+X1_1 ... X1_N2	// Vektor: Genotypen des ersten Phenotyps
+...
+XN3_1... XN3_N2 // Vektor: Genotypen des letzten Phenotyps
+d1 ... dN	// Vektor: natürliche Todesraten
+b1 ... bN	// Vektor: natürliche Geburtenraten	
+B1 ... BN1	// Vektor: Produktionsraten der T-Zellen
+r1 ... rN1	// Vektor: Produktionsmenge der T-Zellen
+C11 ...		// Konkurenz Matrix
+... CNN
+c11 ... 	// Matrix: Geburten Verminderung durch Konkurrenz
+... cNN
+S11_1 ...	// Matrix: natürlich Switchrate des ersten Genotyps
+... SN3N3_1 	
+...
+S11_N2 ...	// Matrix: natürliche Switchrate des letzten Genotyps
+... SN3N3_N2 	
+s11_1 ...	// Matrix: Switch durch TNF-alpha des ersten Genotyps
+... sN3N3_1 	
+...
+s11_N2 ...	// Matrix: Switch durch TNF-alpha des letzten Genotyps
+... sN3N3_N2 	
+T11 ...		// Tod durch T-Zelle
+... T(N1,N2*N3)
+r		// Menge des freigesetzten TNF-alpha nach T-Zell Tötungen
+mu1 ... muN2	// Mutationswahrscheinlichkeiten
+M11 ...		// Mutationsverteilung, zeilensumme = 1, diagonale 0.
+... MN2N2
+K		// Normalisierungsfaktor K
