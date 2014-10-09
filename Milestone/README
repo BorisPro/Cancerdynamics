@@ -1,0 +1,9 @@
+
+Allgemeines:
+- Um das Programm zu starten ist es am einfachsten man macht dies über den qtCreator, wie es auch bei der Simulation der Bachelorarbeit der Fall war. Ich hatte einmal eine Anleitung dazu geschickt, doch Loren könnte es wahrscheinlich auch erklären. Bei Fragen einfach bei mir melden.
+
+Ordner:
+- Der Ordner Cancerdynamics enthält den Quellcode des Programms.
+- Nachdem das Programm einmal ausgeführt wurde wird ein Order "build..." entstehen welcher die ausführbaren Dateien und makefiles enthält.
+- In diesem Build Ordner wird automatisch nach Dateinamen gesucht, wenn ihr manuell Dateinamen in der graphische Oberflaeche in die (einzige) Textzeile eingebt. Dabei koennen auch Unterverzeichnisse beruecksichtigt werden wenn diese mit in die Textzeile eingegeben wurden.
+- Alternativ koennen Dateien auch ueber den "open file" button geoeffnet werden.
