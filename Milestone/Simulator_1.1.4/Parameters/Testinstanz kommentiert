@@ -44,7 +44,7 @@ ACHTUNG: In echten Instanzen darf es keine Kommentare geben! Siehe "Testinstanz"
 2 2 2 2 1 1	Matrix: Deathrate due T-cell resistance. Different for Phenotypes and Genotypes
 1 1 1 2 2 2
 3		resulting TNF-alpha after T-cell killings.
-0.2 0.2 0.2
+0.2 0.2 0.2	Mutationswahrscheinlichkeiten
 0 0.2 0.8	Mutationkernel
 0.5 0 0.5
 0.5 0.5 0

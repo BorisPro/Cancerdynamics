@@ -54,6 +54,8 @@ private Q_SLOTS:
     void getKilledTrait_Test();
 
     void EvolutionStep_Test();
+
+    void testWritingToFile();
 };
 
 TDD_CancerdynamicsTest::TDD_CancerdynamicsTest()
@@ -222,9 +224,11 @@ void TDD_CancerdynamicsTest::addMutationalBirthRates_Test()
 void TDD_CancerdynamicsTest::subtractBirthReduction_Test()
 {
     PopulationManager manager("Testinstanz");
+    manager.subtractBirthReduction();   // tut nichts weil negative Raten abgefangen werden.
+    manager.addNaturalBirthRates();     // erzeugt positive Raten
     manager.subtractBirthReduction();
     vector<double> output(1,0);
-    vector<double> expected = {-270, -10, -10, -10, -40, -40, -40, -40, -40, -40};
+    vector<double> expected = {830-270, 50-10, 50-10, 50-10, 100-40, 100-40, 120-40, 120-40, 120-40, 120-40};
     for(TraitClass trait : manager.traits){
         output.push_back(trait.TraitBirthRate);
         output[0] += output.back();
@@ -488,8 +492,11 @@ void TDD_CancerdynamicsTest::executeProduction_Test()
     size_t chosen = 2;
     manager.event.chosenTrait = chosen;
     manager.traits[chosen].Members=0;
+    manager.traits[0].Members=0;
     manager.executeProduction();
-    QCOMPARE(manager.traits[chosen].Members,3.);
+    qDebug()<< manager.traits[manager.event.chosenTrait].ProductionAmount;
+    QCOMPARE(manager.traits[chosen].Members,1.);
+    QCOMPARE(manager.traits[0].Members,3.);
 //    qDebug()<<manager.traits[chosen].Members;
 }
 
@@ -514,6 +521,26 @@ void TDD_CancerdynamicsTest::EvolutionStep_Test()
     catch(string error){
         qDebug()<<QString::fromStdString(error);
     }
+}
+
+void TDD_CancerdynamicsTest::testWritingToFile()
+{
+    QString filename="Data.txt";
+    QFile file( filename );
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+        stream << "something else" << endl;
+    }
+    else{
+        QVERIFY(false);
+    }
+
+//    CFileStreamer object;
+//    if(false != object.accessFileToWrite("Boris.txt"))
+//        QVERIFY(false);
+//    object.wirteToAccessedFile("test");
+//    object.closeFileToWrite();
 }
 
 
