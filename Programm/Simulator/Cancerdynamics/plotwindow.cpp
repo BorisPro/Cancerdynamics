@@ -56,6 +56,29 @@ void PlotWindow::addGraphWithName(QString GName, QPen graphPen)
     ui->customPlot->graph()->setPen(graphPen);
 }
 
+void PlotWindow::storeGraphDataInFile(const GraphClass *Graph, const QString FName)
+{
+    QString filename = FName;
+    QFile file( filename );
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate) )
+    {
+        QTextStream stream( &file );
+        stream.setRealNumberPrecision(16);
+        QVector<QVector<double>> graphData;
+        graphData.push_back(Graph->getTimesOf(0));
+        for(size_t i = 0; i < numberOfGraphs; ++i){
+            graphData.push_back(Graph->getTraitHistOf(i));
+        }
+        for(size_t i = 0; i < graphData[0].size(); ++i){
+            for(size_t k = 0; k < numberOfGraphs + 1; ++k){
+                stream<<graphData[k][i]<<" ";
+            }
+            stream<<'\n';
+        }
+        file.close();
+    }
+}
+
 void PlotWindow::createGraphs()
 {
     QVector<QPen> graphPen(numberOfGraphs);
@@ -76,6 +99,7 @@ void PlotWindow::fillCreatedGraphs(const GraphClass * Graph)
         ui->customPlot->graph(i)->setData(Graph->getTimesOf(i),Graph->getTraitHistOf(i));
     }
     ui->customPlot->replot();
+    storeGraphDataInFile(Graph,"StorageForGraphData.txt");
     delete Graph;
 }
 

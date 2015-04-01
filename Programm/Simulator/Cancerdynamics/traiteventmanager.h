@@ -32,7 +32,7 @@ public:
     PopulationManager();
     PopulationManager(string FileName);
 
-    void EvolutionStep();
+    void makeEvolutionStep();
     double getKMembers(int TraitIndex) const;
     size_t getNumberOfPopulations() const;
     void initWithFile(const std::string FName);

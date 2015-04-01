@@ -38,6 +38,7 @@ private:
     void createGraphs();
     void fillCreatedGraphs(const GraphClass *Graph);
     void addGraphWithName(QString GName, QPen graphPen);
+    void storeGraphDataInFile(const GraphClass *Graph, const QString FName);
 
 
 public slots:

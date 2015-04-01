@@ -65,7 +65,7 @@ void PopulationManager::initWithFile(const string FName)
     applyKToParameters();
 }
 
-void PopulationManager::EvolutionStep()
+void PopulationManager::makeEvolutionStep()
 {
     calculateTotalEventRates();
     sampleEventTime();
@@ -270,6 +270,8 @@ void PopulationManager::subtractBirthReduction()
             sum += birthReduction[i][j] * traits[j].Members;
         }
         traits[i].TraitBirthRate -= sum * traits[i].Members;
+        if(traits[i].TraitBirthRate < 0)
+            traits[i].TraitBirthRate = 0;
     }
 }
 
@@ -278,7 +280,7 @@ void PopulationManager::calculateTraitBirthRates()
     for(TraitClass& trait : traits)
         trait.TraitBirthRate = 0;
     addNaturalBirthRates();
-//    addMutationalBirthRates();
+    //addMutationalBirthRates();
     subtractBirthReduction();
 }
 
@@ -293,13 +295,6 @@ void PopulationManager::calculateTraitProductionRates()
     for(size_t i = 1; i <= tCells; ++i){
         traits[i].TraitProductionRate = traits[i].Members * melCells[i-1] * traits[i].ProductionRate;
     }
-
-//    double melanomCells = 0;
-//    for(size_t i = 1 + tCells; i <= populations; ++i)
-//        melanomCells += traits[i].Members;
-//    for(size_t i = 1; i <= tCells; ++i){
-//        traits[i].TraitProductionRate = traits[i].Members * melanomCells * traits[i].ProductionRate;
-//    }
 }
 
 void PopulationManager::addNaturalSwitchRates()
@@ -316,14 +311,14 @@ void PopulationManager::addNaturalSwitchRates()
     }
 }
 
-void PopulationManager::addCompetitionSwitchRates()
+void PopulationManager::addCompetitionSwitchRates() // Improve: merge with natural switch rate
 {
-    size_t traitNumber;
+//    size_t traitNumber;
     double switchrate;
     for(size_t k = 0; k < genotypes; ++k){
-        traitNumber = k * phenotypes;
+//        traitNumber = k * phenotypes;
         for(size_t i = 0; i < phenotypes; ++i){
-            traitNumber += i;
+//            traitNumber += i;
             switchrate = 0;
             for(size_t j = 0; j < phenotypes; ++j)
                 switchrate += competitionSwitch[k][i][j];
@@ -332,6 +327,25 @@ void PopulationManager::addCompetitionSwitchRates()
         }
     }
 }
+
+//void PopulationManager::addSwitchRatesImproved()
+//{
+//    double natSwitchSum;
+//    double compSwitchSum;
+//    for(size_t k = 0; k < genotypes; ++k){
+//        for(size_t i = 0; i < phenotypes; ++i){
+//            natSwitchSum = 0;
+//            compSwitchSum = 0;
+//            for(size_t j = 0; j < phenotypes; ++j){
+//                natSwitchSum += naturalSwitch[k][i][j];;
+//                compSwitchSum += competitionSwitch[k][i][j];
+//            }
+//            natSwitchSum *= traits[getMelanomIndex(k,i)].Members;
+//            compSwitchSum *= traits[getMelanomIndex(k,i)].Members * traits[0].Members;
+//            traits[getMelanomIndex(k,i)].TraitSwitchRate = natSwitchSum + compSwitchSum;
+//        }
+//    }
+//}
 
 void PopulationManager::calculateTraitSwitchRates()
 {
@@ -450,7 +464,7 @@ void PopulationManager::sampleEventTime()
 
 void PopulationManager::choseTraitToChange()
 {
-    if(totalEventRate == 0){event.chosenTrait = 0; return;}
+    if(totalEventRate == 0){event.chosenTrait = 0; return;} // update: redundant
     double HittenTrait = dice.rollContUnifDist(totalEventRate);
     for(size_t i = 0; i < populations; i++){
         if(HittenTrait <= traits[i].TraitRate){
@@ -525,9 +539,9 @@ void PopulationManager::choseMutantGenotype()
 
 void PopulationManager::executeBirth()
 {
-    if(event.chosenTrait > 0 && event.chosenTrait < 1 + tCells)
+/*    if(event.chosenTrait > 0 && event.chosenTrait < 1 + tCells) \\ if its a t-cell
         executeProduction();
-    else if(isMutation()){
+    else */if(isMutation()){
         choseMutantGenotype();
         traits[event.chosenTrait].Members++;
     }

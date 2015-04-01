@@ -25,6 +25,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::createBlankInstance()
+{
+
+}
+
 void MainWindow::addTreePopulationProperties()
 {
 //    addRootItem("Population Properties");
@@ -219,7 +224,7 @@ void MainWindow::on_pushButton_load_File_clicked()
 
 void MainWindow::on_pushButton_create_File_clicked()
 {
-    ui->treeWidget_parameters->clear();
+//    ui->treeWidget_parameters->clear();
 //    ui->treeWidget_parameters->setEnabled(true);
 //    ui->groupBox_Input->setEnabled(true);
 //    ui->groupBox_FileStream->setEnabled(false);

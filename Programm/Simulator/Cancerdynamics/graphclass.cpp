@@ -92,7 +92,7 @@ void GraphClass::calcJumpedSteps(int & maxIt)
 void GraphClass::makeJumpedEvSteps(int & Chosen, double & Time)
 {
     for(int i = 0; i < jumpedSteps; ++i){
-        Manager.EvolutionStep();
+        Manager.makeEvolutionStep();
         Time += Manager.event.eventTime;
     }
     Chosen = Manager.event.chosenTrait;

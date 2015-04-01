@@ -22,6 +22,9 @@ public:
     void readFileContent(QString Filename);
     ~MainWindow();
 
+    // creation of new cancer dynamics instances
+    void createBlankInstance();
+
     // manages the display of data in the tree widget!
     void addTreePopulationProperties();
     void addTreeTraitProperties(PopulationManager Parameters);
